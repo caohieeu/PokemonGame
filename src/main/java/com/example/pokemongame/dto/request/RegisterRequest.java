@@ -9,10 +9,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTORequest {
-    String id;
+public class RegisterRequest {
     String username;
-    String avatar;
     String displayName;
     String password;
     String email;

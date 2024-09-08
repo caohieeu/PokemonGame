@@ -1,20 +1,15 @@
 package com.example.pokemongame.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTORequest {
-    String id;
-    String username;
-    String avatar;
-    String displayName;
-    String password;
-    String email;
-    String phone;
+public class IntrospectRequest {
+    String token;
 }

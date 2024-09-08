@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -21,10 +22,11 @@ public class User {
     @Id
     String id;
     String username;
+    String displayName;
     String password;
     String avatar;
     String email;
-    String role;
+    Set<String> role;
     String phone;
     Long point;
     List<String> moves;

@@ -20,6 +20,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 ApiResponse.builder()
                         .code(errorCode.getCode())
                         .message(errorCode.getMessage())
+                        .build()
         );
     }
 }

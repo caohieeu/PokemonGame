@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -14,10 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTOResponse {
+    String id;
     String username;
     String email;
     String phone;
-    String role;
+    Set<String> role;
     Long point;
     List<String> moves;
     List<PokemonSub> pokemons;

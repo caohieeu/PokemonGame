@@ -30,11 +30,47 @@ public class UserController {
                         .build()
         );
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(
+            @PathVariable String userId
+    ) {
+        return ResponseEntity.ok().body(
+                ApiResponse.builder()
+                        .code(2000)
+                        .message("Get user successfully")
+                        .data(userService.getUser(userId))
+                        .build()
+        );
+    }
+    @GetMapping("/myInfo")
+    public ResponseEntity<?> getMyInfo() {
+        return ResponseEntity.ok().body(
+                ApiResponse.builder()
+                        .code(2000)
+                        .message("Get info successfully")
+                        .data(userService.getMyInfo())
+                        .build()
+        );
+    }
     @PostMapping
     public ResponseEntity<?> addUser(
             @RequestBody UserDTORequest userDTORequest
             ) {
         userService.addUser(userDTORequest);
         return ResponseEntity.ok().body("Created");
+    }
+    @PutMapping
+    public ResponseEntity<?> updateUser(
+            @RequestBody UserDTORequest userDTORequest
+    ) {
+        userService.updateUser(userDTORequest);
+        return ResponseEntity.ok().body("Updated");
+    }
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable("userId") String userId
+    ) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok().body("Deleted");
     }
 }

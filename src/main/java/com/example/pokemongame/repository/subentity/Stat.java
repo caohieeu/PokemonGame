@@ -1,7 +1,5 @@
 package com.example.pokemongame.repository.subentity;
 
-import com.example.pokemongame.repository.entity.Moves;
-import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,16 +9,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PokemonSub {
-    @Id
-    String id;
-    String name;
-    String image;
-    String type;
-    String species;
-    Double height;
-    Double weight;
-    String abilities;
+public class Stat {
     Long hp;
     Long atk;
     Long defense;
@@ -28,5 +17,4 @@ public class PokemonSub {
     Long sp_def;
     Long speed;
     Long total;
-    Moves moves;
 }

@@ -1,6 +1,6 @@
 package com.example.pokemongame.repository.entity;
 
-import com.example.pokemongame.repository.subentity.Type;
+import com.example.pokemongame.repository.subentity.Species;
 import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,9 +16,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("Moves")
 public class Moves {
     @Id
-    String id;
+    Long id;
     String name;
-    Type type;
+//    Type type; //lưu dưới dạng list các id của type
+    Species type;
     Long power;
-    Long acc;
+    Long priority;
+    Long effect_chance;
+    Long pp;
+    Long accuracy;
 }
