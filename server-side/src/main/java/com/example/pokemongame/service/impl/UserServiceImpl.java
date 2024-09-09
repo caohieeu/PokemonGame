@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PostAuthorize("returnObject.username == authentication.name")
+    @PostAuthorize("returnObject.username == authentication.name && hasRole('ADMIN')")
     public UserDTOResponse getUser(String userId) {
         UserDTOResponse user = new UserDTOResponse();
         if(userId != null && !userId.equals("")) {
