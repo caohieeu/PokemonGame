@@ -17,6 +17,7 @@ import com.sun.tools.jconsole.JConsolePlugin;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,6 +35,7 @@ public class PokemonServiceImpl implements PokemonService {
     MoveRepository moveRepository;
     @Autowired
     TypeRepository typeRepository;
+    @PostAuthorize("hasRole('ADMIN')")
     @Override
     public void fetchDataAndSaveFromAPI(int id) {
         String apiUrl = "https://pokeapi.co/api/v2/pokemon/"+id+"/";
@@ -96,7 +98,7 @@ public class PokemonServiceImpl implements PokemonService {
             pokemonRepository.insert(pokemon);
         }
     }
-
+    @PostAuthorize("hasRole('ADMIN')")
     @Override
     public void fetchDataAndSaveTypeFormAPI() {
         String apiUrl = "https://pokeapi.co/api/v2/type/";
@@ -107,7 +109,7 @@ public class PokemonServiceImpl implements PokemonService {
             typeRepository.insert(data);
         }
     }
-
+    @PostAuthorize("hasRole('ADMIN')")
     @Override
     public void addPokemon(Pokemon pokemon) {
         Pokemon pkm = pokemonRepository.findByName(pokemon.getName());
@@ -115,5 +117,10 @@ public class PokemonServiceImpl implements PokemonService {
             throw new AppException(ErrorCode.POKEMON_EXISTED);
         }
         pokemonRepository.insert(pokemon);
+    }
+
+    @Override
+    public void addPokemonToUser() {
+
     }
 }

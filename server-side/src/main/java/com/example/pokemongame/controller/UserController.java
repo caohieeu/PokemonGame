@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<?> getUsers(
             @RequestParam Map<String, Object> params
             ) {
@@ -27,6 +27,16 @@ public class UserController {
                         .code(2000)
                         .message("Get users successfully")
                         .data(userService.getUsers(params))
+                        .build()
+        );
+    }
+    @GetMapping
+    public ResponseEntity<?> getUser() {
+        return ResponseEntity.ok().body(
+                ApiResponse.builder()
+                        .code(2000)
+                        .message("Get users successfully")
+                        .data(userService.getUserByToken())
                         .build()
         );
     }

@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PostAuthorize("returnObject.username == authentication.name && hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or (hasRole('USER') " +
+            "and returnObject.username == authentication.name)")
     public UserDTOResponse getUser(String userId) {
         UserDTOResponse user = new UserDTOResponse();
         if(userId != null && !userId.equals("")) {
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTOResponse getMyInfo() {
+    public UserDTOResponse getUserByToken() {
         var context = SecurityContextHolder.getContext();
         String username = context.getAuthentication().getName();
         return userConverterCustom.toUserDTOResponse(
@@ -66,6 +67,17 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public UserDTOResponse getMyInfo() {
+        var context = SecurityContextHolder.getContext();
+        String username = context.getAuthentication().getName();
+        return userConverterCustom.toUserDTOResponse(
+                userRepository.findByUsername(username)
+                        .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND))
+        );
+    }
+    @PostAuthorize("hasRole('ADMIN') or (hasRole('USER') " +
+            "and returnObject.username == authentication.name)")
     @Override
     public void updateUser(UserDTORequest userDTORequest) {
         User user = userRepository.findById(userDTORequest.getId()).orElse(null);
@@ -78,7 +90,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(userDTORequest.getPhone());
         userRepository.save(user);
     }
-
+    @PostAuthorize("hasRole('ADMIN')")
     @Override
     public void deleteUser(String userId) {
         User user = userRepository.findById(userId).orElse(null);

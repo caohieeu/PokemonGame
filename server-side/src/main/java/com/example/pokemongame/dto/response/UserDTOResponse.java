@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserDTOResponse {
     String id;
+    String displayName;
     String username;
     String email;
     String phone;

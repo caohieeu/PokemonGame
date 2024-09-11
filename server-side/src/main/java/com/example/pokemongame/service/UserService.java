@@ -10,6 +10,7 @@ public interface UserService {
     void addUser(UserDTORequest userDTORequest);
     List<UserDTOResponse> getUsers(Map<String, Object> params);
     UserDTOResponse getUser(String userId);
+    UserDTOResponse getUserByToken();
     UserDTOResponse getMyInfo();
     void updateUser(UserDTORequest userDTORequest);
     void deleteUser(String userId);

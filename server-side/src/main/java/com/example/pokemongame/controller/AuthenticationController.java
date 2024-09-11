@@ -8,6 +8,9 @@ import com.example.pokemongame.dto.response.AuthenticateResponse;
 import com.example.pokemongame.dto.response.IntrospectResponse;
 import com.example.pokemongame.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +31,7 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
     @PostMapping("/register")
     public ResponseEntity<?> register(
+            @Valid
             @RequestBody RegisterRequest registerRequest
             ) {
         return ResponseEntity.ok().body(
@@ -40,8 +44,16 @@ public class AuthenticationController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(
-            @RequestBody AuthenticateRequest authenticateRequest
+            @RequestBody AuthenticateRequest authenticateRequest,
+            HttpServletResponse response
     ) {
+        String token = authenticationService.authenticate(authenticateRequest).getToken();
+        Cookie cookie = new Cookie("auth_token", token);
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
         return ResponseEntity.<AuthenticateResponse>ok()
                 .body(ApiResponse.builder()
                         .code(2000)
